@@ -1,3 +1,5 @@
+import 'package:blood_link/constants/images.dart';
+
 class OnBoardingModel {
   final String image;
   final String title;
@@ -10,20 +12,19 @@ class OnBoardingModel {
   });
 }
 
-
 final List<OnBoardingModel> onBoardingContent = [
   OnBoardingModel(
-    image: "assets/images/on_boarding1.jpg",
+    image: onBoarding1,
     title: "Donate Blood",
     description: "Donate blood to save life",
   ),
   OnBoardingModel(
-    image: "assets/images/onboarding1.png",
+    image: onboarding1,
     title: "Save Lives",
     description: "Every drop counts, save lives",
   ),
   OnBoardingModel(
-    image: "assets/images/on_boarding1.jpg",
+    image: onBoarding2,
     title: "Get Connected",
     description: "Join the blood donor community",
   ),

@@ -1,8 +1,8 @@
-import 'package:blood_link/res/components/my_reusable_button.dart';
-import 'package:blood_link/view/home_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:blood_link/widgets/my_reusable_button.dart';
+import 'package:blood_link/routes/export.dart';
+import 'package:blood_link/utils/size_config.dart';
 import 'package:provider/provider.dart';
-import 'package:blood_link/view_model/on_boarding_view_model.dart';
+import 'package:blood_link/viewmodel/on_boarding_controller.dart';
 import 'package:blood_link/models/on_boarding_model.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<OnBoardingViewModel>(context);
+    final viewModel = Provider.of<OnBoardingProvider>(context);
 
     return Scaffold(
       body: Column(
@@ -22,7 +22,9 @@ class OnBoardingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: viewModel.skipToEnd,
+                  onPressed: () {
+                    NavigationHelper.off(AppRoutes.signIn);
+                  },
                   child: Text(
                     "Skip",
                     style: TextStyle(
@@ -59,21 +61,21 @@ class OnBoardingScreen extends StatelessWidget {
                       children: [
                         Image.asset(
                           onBoardingContent[index].image,
-                          height: 250,
+                          height: SizeUtils.height(250),
                         ),
-                        const SizedBox(height: 40),
+                        SizeUtils.heightSizeBox(40),
                         Text(
                           onBoardingContent[index].title,
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: TextStyle(
+                            fontSize: SizeUtils.fontSize(24),
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 15),
+                        SizeUtils.heightSizeBox(15),
                         Text(
                           onBoardingContent[index].description,
-                          style: const TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: SizeUtils.fontSize(16)),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -92,8 +94,10 @@ class OnBoardingScreen extends StatelessWidget {
               (index) => AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 margin: const EdgeInsets.symmetric(horizontal: 4),
-                width: viewModel.currentIndex == index ? 30 : 15,
-                height: 10,
+                width: viewModel.currentIndex == index
+                    ? SizeUtils.width(30)
+                    : SizeUtils.width(15),
+                height: SizeUtils.height(10),
                 decoration: BoxDecoration(
                   color: viewModel.currentIndex == index
                       ? Theme.of(context).colorScheme.primary
@@ -104,7 +108,7 @@ class OnBoardingScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 20),
+          SizeUtils.heightSizeBox(20),
 
           // Buttons
           Padding(
@@ -115,8 +119,7 @@ class OnBoardingScreen extends StatelessWidget {
                     : "Next",
                 onPress: () {
                   if (viewModel.currentIndex == onBoardingContent.length - 1) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => const HomeScreen()));
+                    NavigationHelper.off(AppRoutes.signIn);
                   } else {
                     viewModel.nextPage();
                   }

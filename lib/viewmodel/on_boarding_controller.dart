@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:blood_link/core/base_provider.dart';
 import 'package:blood_link/models/on_boarding_model.dart';
+import 'package:flutter/material.dart';
 
-class OnBoardingViewModel extends ChangeNotifier {
+class OnBoardingProvider extends BaseProvider {
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
@@ -31,5 +32,11 @@ class OnBoardingViewModel extends ChangeNotifier {
   void updateIndex(int index) {
     _currentIndex = index;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }
